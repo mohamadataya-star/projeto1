@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Agrinho Vivo | Tecnologia contra Queimadas</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <!-- Animate.css para animações extras -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #fef7e8 0%, #fff6eb 100%);
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* Cores temáticas */
+        :root {
+            --fire: #e05a2a;
+            --fire-dark: #b13e12;
+            --earth: #5a4a2e;
+            --leaf: #3c7a3e;
+            --tech: #1e5f8e;
+            --tech-light: #2c7cb6;
+            --sun: #f5b042;
+            --shadow-sm: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.02);
+        }
+
+        /* HEADER com animação glow */
+        header {
+            background: linear-gradient(135deg, #1f3b2c 0%, #2d5a3b 100%);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff 30%, #ffd966);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 0px rgba(255,200,100,0);}
+            50% { text-shadow: 0 0 8px rgba(255,180,70,0.6);}
+            100% { text-shadow: 0 0 0px rgba(255,200,100,0);}
+        }
+
+        .logo span {
+            color: #ffb347;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #f9f3e2;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #ffb347;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-2px);
+            color: #ffb347;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--fire);
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(224,90,42,0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            background: var(--fire-dark);
+            box-shadow: 0 10px 20px rgba(224,90,42,0.4);
+        }
+
+        /* Hero com animação de faíscas */
+        .hero {
+            background: radial-gradient(circle at 10% 30%, #fff3e6, #ffe0c4);
+            padding: 3rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .floating-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-icons i {
+            position: absolute;
+            font-size: 1.8rem;
+            opacity: 0.3;
+            animation: floatAround 12s infinite linear;
+            color: #e05a2a;
+        }
+
+        @keyframes floatAround {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-120px) rotate(20deg); opacity: 0; }
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #b13e12;
+            margin-bottom: 1rem;
+        }
+
+        .badge-impact {
+            background: rgba(247, 212, 74, 0.3);
+            backdrop-filter: blur(6px);
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            display: inline-flex;
+            gap: 0.8rem;
+            align-items: center;
+            font-weight: 600;
+            border: 1px solid #ffb447;
+            animation: pulseBadge 2s infinite;
+        }
+
+        @keyframes pulseBadge {
+            0% { box-shadow: 0 0 0 0 rgba(255, 180, 71, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 180, 71, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 180, 71, 0); }
+        }
+
+        section {
+            padding: 4rem 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(120deg, #e05a2a, #e59934);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--fire);
+            border-radius: 4px;
+            animation: expandLine 0.8s ease-out;
+        }
+
+        @keyframes expandLine {
+            from { width: 0; }
+            to { width: 80px; }
+        }
+
+        /* Cards com animação hover 3D */
+        .cards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2.5rem;
+            justify-content: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 245, 0.9);
+            backdrop-filter: blur(2px);
+            border-radius: 32px;
+            padding: 2rem 1.5rem;
+            flex: 1 1 280px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1px solid #ffddbb;
+            animation: cardAppear 0.5s backwards;
+            animation-delay: calc(0.1s * var(--i, 1));
+        }
+
+        @keyframes cardAppear {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 30px 35px -12px rgba(0,0,0,0.2);
+            background: white;
+        }
+
+        .card i {
+            font-size: 2.8rem;
+            color: var(--fire);
+            margin-bottom: 1rem;
+            transition: 0.3s;
+        }
+
+        .card:hover i {
+            transform: rotate(5deg) scale(1.1);
+            color: var(--tech);
+        }
+
+        /* Impact list animated */
+        .impact-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            margin-top: 2rem;
+        }
+
+        .impact-item {
+            background: #fff2e6;
+            border-left: 8px solid var(--fire);
+            padding: 1.2rem 1.5rem;
+            border-radius: 20px;
+            flex: 1 1 260px;
+            transition: all 0.3s;
+            animation: slideInLeft 0.6s backwards;
+            animation-delay: calc(0.05s * var(--order, 0));
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .impact-item:hover {
+            transform: translateX(8px);
+            background: #fff0e0;
+            border-left-color: var(--tech);
+        }
+
+        .tech-solution {
+            background: linear-gradient(125deg, #eef5fa, #e4f0f7);
+            border-radius: 55px;
+            padding: 2rem;
+            margin-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+            transition: 0.3s;
+            animation: zoomFade 0.7s;
+        }
+
+        @keyframes zoomFade {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .simulator {
+            background: linear-gradient(115deg, #1f4633, #2b5a3c);
+            color: white;
+            border-radius: 48px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.2);
+            transition: 0.4s;
+        }
+
+        .simulator:hover {
+            transform: translateY(-5px);
+        }
+
+        .quiz-card {
+            background: rgba(255,255,240,0.95);
+            border-radius: 40px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .quiz-option {
+            background: #eceae4;
+            padding: 0.7rem 1.5rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+            animation: popBtn 0.4s;
+        }
+
+        @keyframes popBtn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .quiz-option:hover {
+            background: var(--fire);
+            color: white;
+            transform: scale(1.02);
+        }
+
+        footer {
+            background: #221c14;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-top: 3px solid #ffb347;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* partículas / fogo animado no fundo */
+        .firefly {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 140, 30, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: riseFire 4s linear infinite;
+        }
+
+        @keyframes riseFire {
+            0% { transform: translateY(0) scale(0); opacity: 0.7; }
+            100% { transform: translateY(-400px) scale(1); opacity: 0; }
+        }
+
+        @media (max-width: 800px) {
+            .hero h2 { font-size: 2rem; }
+            .section-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <h1>🌱 Agrinho <span>| Terra Viva Tech</span></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#impacto">🌿 Impacto</a></li>
+                <li><a href="#tecnologia">🚀 Inovação</a></li>
+                <li><a href="#solucoes">⚙️ Soluções</a></li>
+                <li><a href="#simular">📊 Simulador</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="floating-icons" id="floatIcons"></div>
+        <div class="hero-content">
+            <h2 class="animate__animated animate__bounceIn">🔥 Queimadas: <span style="color:#ff914d;">Desafio & Revolução Verde</span></h2>
+            <p class="animate__animated animate__fadeInUp">Com drones, satélites e inteligência artificial, podemos <strong>prevenir o fogo</strong> e proteger nosso futuro. Cada ação conta, cada inovação salva vidas!</p>
+            <div class="badge-impact animate__animated animate__pulse animate__infinite">
+                <i class="fas fa-fire-extinguisher"></i> <span>🌍 Tecnologia salva o planeta | -65% de focos com monitoramento avançado</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="impacto">
+        <h2 class="section-title">💥 O fogo no dia a dia: consequências reais</h2>
+        <div class="impact-list">
+            <div class="impact-item" style="--order:0"><i class="fas fa-lungs"></i> <strong>Saúde</strong> — A cada 10 focos, internações por problemas respiratórios aumentam 22%.</div>
+            <div class="impact-item" style="--order:1"><i class="fas fa-apple-alt"></i> <strong>Comida na mesa</strong> — Queimadas destroem solo fértil e encarecem alimentos.</div>
+            <div class="impact-item" style="--order:2"><i class="fas fa-water"></i> <strong>Secas severas</strong> — Sem árvores, chove menos; o ciclo da água é quebrado.</div>
+            <div class="impact-item" style="--order:3"><i class="fas fa-temperature-high"></i> <strong>Calor extremo</strong> — Liberação de CO₂ intensifica mudanças climáticas.</div>
+            <div class="impact-item" style="--order:4"><i class="fas fa-briefcase"></i> <strong>Prejuízo bilionário</strong> — Agropecuária perde R$ 5 bi por ano com incêndios.</div>
+        </div>
+        <div class="cards-grid">
+            <div class="card" style="--i:1"><i class="fas fa-chart-line"></i><h3>🔥 Alerta Brasil</h3><p>+250 mil focos em 2024 (INPE), maior número dos últimos 6 anos.</p></div>
+            <div class="card" style="--i:2"><i class="fas fa-globe-americas"></i><h3>🐾 Biodiversidade</h3><p>Mais de 500 espécies ameaçadas só no Cerrado e Pantanal.</p></div>
+            <div class="card" style="--i:3"><i class="fas fa-tint"></i><h3>🌧️ Ciclo da Chuva</h3><p>Queimadas na Amazônia afetam as chuvas no Centro-Sul.</p></div>
+        </div>
+    </section>
+
+    <section id="tecnologia">
+        <h2 class="section-title">🚁 Tecnologia de ponta contra o fogo</h2>
+        <div class="tech-solution">
+            <div class="tech-text">
+                <h3><i class="fas fa-satellite-dish"></i> Satélites + Inteligência Artificial</h3>
+                <p>O programa BDQueimadas (INPE) com IA prevê focos de calor com 92% de precisão em 48h. Alertas enviados por SMS e aplicativos reduzem tempo de resposta em 70%.</p>
+                <h3 style="margin-top: 1rem;"><i class="fas fa-drone"></i> Esquadrões de Drones</h3>
+                <p>Drones com câmeras térmicas sobrevoam áreas remotas 24h, detectando focos antes de se alastrarem. Combate rápido + biodispersão de sementes pós-incêndio.</p>
+            </div>
+            <div class="tech-icon">
+                <i class="fas fa-microchip fa-3x"></i><br>
+                <i class="fas fa-cloud-sun-rain fa-2x"></i>
+                <p style="margin-top: 15px;"><strong>Monitoramento em tempo real</strong></p>
+            </div>
+        </div>
+        <div class="cards-grid">
+            <div class="card" style="--i:1"><i class="fas fa-charging-station"></i><h3>Big Data</h3><p>Modelos preditivos com dados meteorológicos + histórico em nuvem.</p></div>
+            <div class="card" style="--i:2"><i class="fas fa-seedling"></i><h3>Bioengenharia</h3><p>Tecnologia de “cápsulas de solo” com microrganismos que aceleram regeneração.</p></div>
+            <div class="card" style="--i:3"><i class="fas fa-mobile-alt"></i><h3>App Guardião</h3><p>Cidadão denuncia e aciona brigada com um clique; geolocalização em tempo real.</p></div>
+        </div>
+    </section>
+
+    <section id="solucoes">
+        <h2 class="section-title">🌎 Soluções integradas: do campo à cidade</h2>
+        <div class="tech-solution" style="background: #e2f0e6; flex-direction: row-reverse;">
+            <div class="tech-text">
+                <ul style="margin-left: 1.5rem;">
+                    <li><i class="fas fa-check-circle" style="color: #2b7a3e;"></i> <strong>Agricultura de precisão</strong> com sensores de umidade e queima controlada via satélite.</li>
+                    <li><i class="fas fa-check-circle" style="color: #2b7a3e;"></i> <strong>Corredores ecológicos inteligentes</strong> mapeados por IA.</li>
+                    <li><i class="fas fa-check-circle" style="color: #2b7a3e;"></i> <strong>Programas de crédito carbono</strong> para produtores que adotam tecnologias limpas.</li>
+                    <li><i class="fas fa-check-circle" style="color: #2b7a3e;"></i> <strong>Educação com realidade aumentada</strong> nas escolas mostrando o impacto do fogo.</li>
+                </ul>
+            </div>
+            <div class="tech-icon">
+                <i class="fas fa-robot fa-3x"></i>
+                <i class="fas fa-tree fa-2x"></i>
+            </div>
+        </div>
+        <!-- Quiz gamificado animado -->
+        <div class="quiz-card">
+            <h3><i class="fas fa-lightbulb"></i> 🧠 Quiz Rápido: Você sabe como a tecnologia ajuda?</h3>
+            <div class="quiz-question">❓ Qual dessas inovações é a mais promissora para detectar queimadas em áreas de difícil acesso ANTES que se tornem grandes incêndios?</div>
+            <div class="quiz-options">
+                <div class="quiz-option" data-correct="true">🛰️ Sensoriamento remoto + IA com alertas automáticos</div>
+                <div class="quiz-option">📞 Apenas ligações para o corpo de bombeiros</div>
+                <div class="quiz-option">🌲 Caminhadas de monitoramento humano</div>
+                <div class="quiz-option">📻 Anúncios em rádio local</div>
+            </div>
+            <div class="quiz-feedback" id="quizFeedback">✨ Clique e descubra o poder da inovação!</div>
+        </div>
+    </section>
+
+    <section id="simular">
+        <h2 class="section-title">📈 Simulador: Tecnologia salvando vidas e dinheiro</h2>
+        <div class="simulator">
+            <h3><i class="fas fa-chart-simple"></i> Calcule o impacto da tecnologia no seu município</h3>
+            <p>Informe a área queimada e veja como soluções modernas reduzem prejuízos e emissões.</p>
+            <div class="sim-control" style="display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0;">
+                <div class="input-group" style="flex:1">
+                    <label><i class="fas fa-tree"></i> Área queimada (hectares)</label>
+                    <input type="number" id="areaQueimada" value="150" step="10">
+                </div>
+                <div class="input-group" style="flex:1">
+                    <label><i class="fas fa-dollar-sign"></i> Prejuízo médio por hectare (R$)</label>
+                    <input type="number" id="prejuizoHectare" value="3000" step="100">
+                </div>
+                <div class="input-group" style="flex:1">
+                    <label><i class="fas fa-microchip"></i> Nível tecnológico:</label>
+                    <select id="techLevel">
+                        <option value="0">📡 Sem tecnologia (prevenção baixa)</option>
+                        <option value="0.45" selected>🛰️ Monitoramento por satélite (redução 45%)</option>
+                        <option value="0.7">🚁 Drones + IA (redução 70%)</option>
+                        <option value="0.88">⚙️ Sistema integrado avançado (redução 88%)</option>
+                    </select>
+                </div>
+                <div><button class="btn" id="calcularImpactoBtn">✨ Calcular benefício</button></div>
+            </div>
+            <div class="result-area" id="simulatorResult" style="background:#1e372a; border-radius: 32px; padding: 1rem;">
+                💡 Preencha e veja o quanto a tecnologia pode salvar!
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p><i class="fas fa-seedling"></i> Projeto Agrinho - Inovação e Sustentabilidade | Dados: INPE, MapBiomas, Embrapa</p>
+        <p>📢 Disque denúncia: 0800 61 8080 (Ibama) | <i class="fas fa-heart" style="color:#ff7b4a;"></i> Juntos contra as queimadas</p>
+        <p>🌱 Tecnologia + atitude = um futuro sem fogo descontrolado</p>
+    </footer>
+
+    <script>
+        // Partículas flutuantes estilo faíscas animadas
+        function createFloatingIcons() {
+            const container = document.getElementById('floatIcons');
+            const icons = ['🔥', '🌿', '🚁', '🛰️', '💧', '🌎', '🍃', '⚡'];
+            for (let i = 0; i < 20; i++) {
+                let span = document.createElement('i');
+                span.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+                span.style.position = 'absolute';
+                span.style.fontSize = (1 + Math.random() * 2) + 'rem';
+                span.style.left = Math.random() * 100 + '%';
+                span.style.bottom = '-20px';
+                span.style.animationDelay = Math.random() * 8 + 's';
+                span.style.animationDuration = 6 + Math.random() * 8 + 's';
+                span.style.opacity = 0.2 + Math.random() * 0.5;
+                container.appendChild(span);
+            }
+        }
+        createFloatingIcons();
+
+        // Criar "fireflies" aleatórios no fundo
+        function createFireflies() {
+            setInterval(() => {
+                let fly = document.createElement('div');
+                fly.classList.add('firefly');
+                fly.style.left = Math.random() * window.innerWidth + 'px';
+                fly.style.top = window.innerHeight + 'px';
+                fly.style.background = `rgba(255, ${80 + Math.random() * 100}, 30, 0.6)`;
+                fly.style.width = fly.style.height = (4 + Math.random() * 6) + 'px';
+                document.body.appendChild(fly);
+                setTimeout(() => { fly.remove(); }, 4000);
+            }, 600);
+        }
+        createFireflies();
+
+        // QUIZ interativo com animação
+        const quizOptions = document.querySelectorAll('.quiz-option');
+        const quizFeedback = document.getElementById('quizFeedback');
+        quizOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                const isCorrect = opt.getAttribute('data-correct') === 'true';
+                if (isCorrect) {
+                    quizFeedback.innerHTML = '✅ 🎉 CORRETO! Satélites + IA conseguem detectar focos de calor em tempo real, reduzindo em até 70% a área queimada e evitando desastres. Tecnologia salva vidas!';
+                    quizFeedback.style.color = '#2d6a4f';
+                    quizFeedback.style.fontWeight = 'bold';
+                    opt.style.transform = 'scale(1.05)';
+                } else {
+                    quizFeedback.innerHTML = '❌ Ops! A melhor tecnologia são satélites com inteligência artificial e sensores térmicos, capazes de prever incêndios antes mesmo do fogo se alastrar. Estude mais e previna-se! 🔥';
+                    quizFeedback.style.color = '#b13e12';
+                    quizFeedback.style.fontWeight = 'bold';
+                }
+                setTimeout(() => { opt.style.transform = ''; }, 200);
+            });
+        });
+
+        // Simulador interativo
+        const areaInput = document.getElementById('areaQueimada');
+        const prejuizoInput = document.getElementById('prejuizoHectare');
+        const techSelect = document.getElementById('techLevel');
+        const calcBtn = document.getElementById('calcularImpactoBtn');
+        const resultDiv = document.getElementById('simulatorResult');
+
+        function formatMoney(value) {
+            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+        }
+
+        function updateSimulator() {
+            let area = parseFloat(areaInput.value) || 0;
+            let prejuizoHa = parseFloat(prejuizoInput.value) || 0;
+            let techReduction = parseFloat(techSelect.value);
+
+            let prejuizoTotal = area * prejuizoHa;
+            let evitado = prejuizoTotal * techReduction;
+            let restante = prejuizoTotal - evitado;
+            let co2PorHa = 50;
+            let co2Evitado = area * co2PorHa * techReduction;
+            let arvoresEq = Math.floor(co2Evitado / 0.22);
+
+            let techName = techSelect.options[techSelect.selectedIndex]?.text || "Tecnologia";
+
+            if (area === 0) {
+                resultDiv.innerHTML = `🌱 Digite uma área queimada para ver o impacto das tecnologias.`;
+                return;
+            }
+
+            resultDiv.innerHTML = `
+                <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap: 10px;">
+                    <span><strong>🔥 Área afetada:</strong> ${area.toFixed(0)} ha</span>
+                    <span><strong>💰 Perda potencial:</strong> ${formatMoney(prejuizoTotal)}</span>
+                </div>
+                <div><strong>🛰️ Tecnologia aplicada:</strong> ${techName} (redução ${(techReduction*100).toFixed(0)}% dos danos)</div>
+                <div style="background:#2d5a3e; border-radius: 20px; padding: 0.7rem; margin: 12px 0;">
+                    ✅ <strong>PREVENÇÃO E EVITAÇÃO:</strong> ${formatMoney(evitado)} economizados!<br>
+                    📉 Prejuízo residual: ${formatMoney(restante)}<br>
+                    🌿 CO₂ evitado: ${co2Evitado.toFixed(1)} toneladas (equivale a plantar ${arvoresEq} árvores)
+                </div>
+                <div><i class="fas fa-chart-line"></i> Com monitoramento por satélite e drones, milhares de hectares são preservados. Invista em inovação!</div>
+            `;
+        }
+
+        calcBtn.addEventListener('click', updateSimulator);
+        updateSimulator();
+
+        // Animar elementos ao rolar com IntersectionObserver (dando vida)
+        const animatedElements = document.querySelectorAll('.card, .impact-item, .tech-solution');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'none';
+                    entry.target.offsetHeight;
+                    if (entry.target.classList.contains('card')) entry.target.style.animation = 'cardAppear 0.5s forwards';
+                    else if (entry.target.classList.contains('impact-item')) entry.target.style.animation = 'slideInLeft 0.5s forwards';
+                    else if (entry.target.classList.contains('tech-solution')) entry.target.style.animation = 'zoomFade 0.6s forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        animatedElements.forEach(el => observer.observe(el));
+        
+        // Adicionar efeito de digitação no título Hero (interação)
+        const heroTitle = document.querySelector('.hero h2');
+        if(heroTitle) {
+            const originalText = heroTitle.innerHTML;
+            heroTitle.style.opacity = '0';
+            setTimeout(() => {
+                heroTitle.style.transition = 'opacity 0.5s';
+                heroTitle.style.opacity = '1';
+            }, 200);
+        }
+    </script>
+</body>
+</html>
